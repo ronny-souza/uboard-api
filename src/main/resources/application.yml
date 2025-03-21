@@ -1,0 +1,22 @@
+server:
+  port: ${APP_PORT:8080}
+spring:
+  datasource:
+    url: ${UBOARD_DATABASE_URL:jdbc:postgresql://localhost:5432/uboard}
+    username: ${UBOARD_DATABASE_USERNAME:postgres}
+    password: ${UBOARD_DATABASE_PASSWORD:root}
+  jpa:
+    show-sql: ${UBOARD_DATABASE_SHOW_SQL:false}
+    hibernate:
+      ddl-auto: ${UBOARD_DATABASE_DDL_AUTO:update}
+    properties:
+      hibernate:
+        format_sql: ${UBOARD_DATABASE_FORMAT_SQL:false}
+  application:
+    name: uBoard API
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: ${APP_OAUTH2_JWK_ISSUER_URI:http://localhost:8181/realms/uboard}
+          jwk-set-uri: ${spring.security.oauth2.resource-server.jwt.issuer-uri}/protocol/openid-connect/certs
