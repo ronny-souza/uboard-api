@@ -8,7 +8,8 @@ public record ScrumPokerRoomDTO(String uuid,
                                 String name,
                                 LocalDateTime createdAt,
                                 boolean closed,
-                                LocalDateTime closedAt) {
+                                LocalDateTime closedAt,
+                                boolean isVotesVisible) {
 
     public ScrumPokerRoomDTO(ScrumPokerRoom scrumPokerRoom) {
         this(
@@ -16,7 +17,8 @@ public record ScrumPokerRoomDTO(String uuid,
                 scrumPokerRoom.getName(),
                 scrumPokerRoom.getCreatedAt(),
                 scrumPokerRoom.isClosed(),
-                scrumPokerRoom.getClosedAt()
+                scrumPokerRoom.getClosedAt(),
+                scrumPokerRoom.isVotesVisible()
         );
     }
 }

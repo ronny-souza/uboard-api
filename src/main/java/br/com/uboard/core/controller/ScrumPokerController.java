@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/scrum-poker")
 public class ScrumPokerController {
-
     private final CreateScrumPokerRoomService createScrumPokerRoomService;
     private final GetScrumPokerRoomService getScrumPokerRoomService;
     private final ListScrumPokerRoomVotesService listScrumPokerRoomVotesService;

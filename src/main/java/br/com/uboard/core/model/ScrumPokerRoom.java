@@ -28,6 +28,9 @@ public class ScrumPokerRoom {
 
     private String userIdentifier;
 
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean isVotesVisible;
+
     public ScrumPokerRoom() {
 
     }
@@ -66,5 +69,13 @@ public class ScrumPokerRoom {
 
     public String getUserIdentifier() {
         return userIdentifier;
+    }
+
+    public boolean isVotesVisible() {
+        return isVotesVisible;
+    }
+
+    public void setVotesVisible(boolean votesVisible) {
+        isVotesVisible = votesVisible;
     }
 }
