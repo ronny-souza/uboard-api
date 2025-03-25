@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class ChangeScrumPokerRoomVotesVisibility {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ChangeScrumPokerRoomVotesVisibility.class);
+public class ChangeScrumPokerRoomVotesVisibilityService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChangeScrumPokerRoomVotesVisibilityService.class);
     private final ScrumPokerRoomRepository scrumPokerRoomRepository;
 
-    public ChangeScrumPokerRoomVotesVisibility(ScrumPokerRoomRepository scrumPokerRoomRepository) {
+    public ChangeScrumPokerRoomVotesVisibilityService(ScrumPokerRoomRepository scrumPokerRoomRepository) {
         this.scrumPokerRoomRepository = scrumPokerRoomRepository;
     }
 
