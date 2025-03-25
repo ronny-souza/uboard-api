@@ -26,6 +26,7 @@ public class ScrumPokerRoom {
 
     private LocalDateTime closedAt;
 
+    @Column(nullable = false)
     private String userIdentifier;
 
     @Column(nullable = false, columnDefinition = "boolean default false")

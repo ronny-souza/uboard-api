@@ -9,6 +9,7 @@ public record ScrumPokerRoomDTO(String uuid,
                                 LocalDateTime createdAt,
                                 boolean closed,
                                 LocalDateTime closedAt,
+                                String userIdentifier,
                                 boolean isVotesVisible) {
 
     public ScrumPokerRoomDTO(ScrumPokerRoom scrumPokerRoom) {
@@ -18,6 +19,7 @@ public record ScrumPokerRoomDTO(String uuid,
                 scrumPokerRoom.getCreatedAt(),
                 scrumPokerRoom.isClosed(),
                 scrumPokerRoom.getClosedAt(),
+                scrumPokerRoom.getUserIdentifier(),
                 scrumPokerRoom.isVotesVisible()
         );
     }
