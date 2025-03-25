@@ -8,4 +8,8 @@ import java.util.Optional;
 public interface ScrumPokerRoomRepository extends JpaRepository<ScrumPokerRoom, Long> {
 
     Optional<ScrumPokerRoom> findByUuid(String uuid);
+
+    Optional<ScrumPokerRoom> findByUuidAndUserIdentifier(String uuid, String userIdentifier);
+
 }
+

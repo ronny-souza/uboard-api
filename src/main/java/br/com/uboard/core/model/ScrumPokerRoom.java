@@ -64,8 +64,16 @@ public class ScrumPokerRoom {
         return closed;
     }
 
+    public void setClosed(boolean closed) {
+        this.closed = closed;
+    }
+
     public LocalDateTime getClosedAt() {
         return closedAt;
+    }
+
+    public void setClosedAt(LocalDateTime closedAt) {
+        this.closedAt = closedAt;
     }
 
     public String getUserIdentifier() {
