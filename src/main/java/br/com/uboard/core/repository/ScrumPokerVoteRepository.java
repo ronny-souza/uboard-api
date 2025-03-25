@@ -11,4 +11,6 @@ public interface ScrumPokerVoteRepository extends JpaRepository<ScrumPokerVote, 
     List<ScrumPokerVote> findByRoomIdentifier(String roomIdentifier);
 
     Optional<ScrumPokerVote> findByRoomIdentifierAndUserIdentifier(String roomIdentifier, String userIdentifier);
+
+    void deleteByRoomIdentifierAndUserIdentifier(String roomIdentifier, String userIdentifier);
 }
