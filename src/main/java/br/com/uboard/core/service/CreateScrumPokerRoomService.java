@@ -3,6 +3,7 @@ package br.com.uboard.core.service;
 import br.com.uboard.core.model.ScrumPokerRoom;
 import br.com.uboard.core.model.operations.CreateScrumPokerRoomForm;
 import br.com.uboard.core.model.transport.ScrumPokerRoomDTO;
+import br.com.uboard.core.model.transport.SessionUserDTO;
 import br.com.uboard.core.repository.ScrumPokerRoomRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +20,9 @@ public class CreateScrumPokerRoomService {
     }
 
     @Transactional
-    public ScrumPokerRoomDTO createScrumPokerRoom(CreateScrumPokerRoomForm form) {
+    public ScrumPokerRoomDTO createScrumPokerRoom(CreateScrumPokerRoomForm form, SessionUserDTO sessionUserDTO) {
         LOGGER.info("Starting scrum poker room creation...");
-        ScrumPokerRoom scrumPokerRoom = this.scrumPokerRoomRepository.save(new ScrumPokerRoom(form));
+        ScrumPokerRoom scrumPokerRoom = this.scrumPokerRoomRepository.save(new ScrumPokerRoom(form, sessionUserDTO));
         return new ScrumPokerRoomDTO(scrumPokerRoom);
     }
 }
