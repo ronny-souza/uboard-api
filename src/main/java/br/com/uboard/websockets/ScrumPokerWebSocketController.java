@@ -21,7 +21,11 @@ public class ScrumPokerWebSocketController {
     private final DeleteScrumPokerRoomUserService deleteScrumPokerRoomUserService;
     private final CloseScrumPokerRoomService closeScrumPokerRoomService;
 
-    public ScrumPokerWebSocketController(SimpMessagingTemplate simpMessagingTemplate, PersistScrumPokerVoteService persistScrumPokerVoteService, ChangeScrumPokerRoomVotesVisibilityService changeScrumPokerRoomVotesVisibilityService, DeleteScrumPokerRoomUserService deleteScrumPokerRoomUserService, CloseScrumPokerRoomService closeScrumPokerRoomService) {
+    public ScrumPokerWebSocketController(SimpMessagingTemplate simpMessagingTemplate,
+                                         PersistScrumPokerVoteService persistScrumPokerVoteService,
+                                         ChangeScrumPokerRoomVotesVisibilityService changeScrumPokerRoomVotesVisibilityService,
+                                         DeleteScrumPokerRoomUserService deleteScrumPokerRoomUserService,
+                                         CloseScrumPokerRoomService closeScrumPokerRoomService) {
         this.simpMessagingTemplate = simpMessagingTemplate;
         this.persistScrumPokerVoteService = persistScrumPokerVoteService;
         this.changeScrumPokerRoomVotesVisibilityService = changeScrumPokerRoomVotesVisibilityService;
@@ -30,13 +34,13 @@ public class ScrumPokerWebSocketController {
     }
 
     @MessageMapping("/poker-room/{id}/vote")
-    public void submitVote(@DestinationVariable String id, ScrumPokerWebSocketVoteForm form) {
+    public void submitScrumPokerRoomUserVote(@DestinationVariable String id, ScrumPokerWebSocketVoteForm form) {
         ScrumPokerVoteDTO scrumPokerVoteDTO = this.persistScrumPokerVoteService.persistVote(form);
         this.simpMessagingTemplate.convertAndSend(String.format("/poker-room/%s/votes", id), scrumPokerVoteDTO);
     }
 
     @MessageMapping("/poker-room/{id}/toggle-votes")
-    public void toggleVotes(@DestinationVariable String id, boolean isRoomVotesVisible) {
+    public void changeScrumPokerRoomVotesVisibility(@DestinationVariable String id, boolean isRoomVotesVisible) {
         this.changeScrumPokerRoomVotesVisibilityService.changeScrumPokerRoomVotesVisibility(id, isRoomVotesVisible);
         this.simpMessagingTemplate.convertAndSend(String.format("/poker-room/%s/votes-visibility", id), isRoomVotesVisible);
     }
@@ -48,8 +52,8 @@ public class ScrumPokerWebSocketController {
     }
 
     @MessageMapping("/poker-room/{id}/close")
-    public void closeRoom(@DestinationVariable String id, String userIdentifier) throws ScrumPokerRoomNotFoundException {
-        this.closeScrumPokerRoomService.closeRoom(id, userIdentifier);
+    public void closeScrumPokerRoom(@DestinationVariable String id, String userIdentifier) throws ScrumPokerRoomNotFoundException {
+        this.closeScrumPokerRoomService.closeScrumPokerRoom(id, userIdentifier);
         this.simpMessagingTemplate.convertAndSend(String.format("/poker-room/%s/is-closed", id), true);
     }
 }

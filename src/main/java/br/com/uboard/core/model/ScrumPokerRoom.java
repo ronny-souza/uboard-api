@@ -1,6 +1,7 @@
 package br.com.uboard.core.model;
 
 import br.com.uboard.core.model.operations.CreateScrumPokerRoomForm;
+import br.com.uboard.core.model.transport.SessionUserDTO;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -36,12 +37,12 @@ public class ScrumPokerRoom {
 
     }
 
-    public ScrumPokerRoom(CreateScrumPokerRoomForm form) {
+    public ScrumPokerRoom(CreateScrumPokerRoomForm form, SessionUserDTO sessionUserDTO) {
         this.uuid = UUID.randomUUID().toString();
         this.name = form.name();
         this.createdAt = LocalDateTime.now();
         this.closed = false;
-        this.userIdentifier = form.userIdentifier();
+        this.userIdentifier = sessionUserDTO.id();
     }
 
     public Long getId() {

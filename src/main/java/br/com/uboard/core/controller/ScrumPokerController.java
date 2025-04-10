@@ -3,6 +3,7 @@ package br.com.uboard.core.controller;
 import br.com.uboard.core.model.operations.CreateScrumPokerRoomForm;
 import br.com.uboard.core.model.transport.ScrumPokerRoomDTO;
 import br.com.uboard.core.model.transport.ScrumPokerVoteDTO;
+import br.com.uboard.core.model.transport.SessionUserDTO;
 import br.com.uboard.core.service.CreateScrumPokerRoomService;
 import br.com.uboard.core.service.GetScrumPokerRoomService;
 import br.com.uboard.core.service.ListScrumPokerRoomVotesService;
@@ -34,7 +35,8 @@ public class ScrumPokerController {
     public ResponseEntity<ScrumPokerRoomDTO> createScrumPokerRoom(@AuthenticationPrincipal Jwt jwt,
                                                                   @RequestBody @Valid CreateScrumPokerRoomForm form,
                                                                   UriComponentsBuilder uriComponentsBuilder) {
-        ScrumPokerRoomDTO response = this.createScrumPokerRoomService.createScrumPokerRoom(form);
+        SessionUserDTO sessionUserDTO = new SessionUserDTO(jwt);
+        ScrumPokerRoomDTO response = this.createScrumPokerRoomService.createScrumPokerRoom(form, sessionUserDTO);
         return ResponseEntity.created(uriComponentsBuilder
                 .path("/scrum-poker/{id}")
                 .buildAndExpand(response.uuid())

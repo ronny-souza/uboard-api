@@ -20,3 +20,32 @@ spring:
         jwt:
           issuer-uri: ${APP_OAUTH2_JWK_ISSUER_URI:http://localhost:8181/realms/uboard}
           jwk-set-uri: ${spring.security.oauth2.resource-server.jwt.issuer-uri}/protocol/openid-connect/certs
+  cloud:
+    vault:
+      authentication: TOKEN
+      token: ${UBOARD_VAULT_TOKEN}
+      uri: ${UBOARD_VAULT_URI}
+      config:
+        lifecycle:
+          enabled: true
+          min-renewal: 10s
+          expiry-threshold: 1m
+        order: 1
+  rabbitmq:
+    host: ${UBOARD_RABBITMQ_HOST:localhost}
+    port: ${UBOARD_RABBITMQ_PORT:5672}
+    virtual-host: ${UBOARD_RABBITMQ_VIRTUAL_HOST:/}
+    username: ${UBOARD_RABBITMQ_USERNAME:guest}
+    password: ${UBOARD_RABBITMQ_PASSWORD:guest}
+
+app:
+  vault:
+    default-path: ${UBOARD_VAULT_DEFAULT_PATH}
+  configuration:
+    allowed-origins: ${UBOARD_ALLOWED_ORIGINS:http://localhost:4200,http://localhost:3000}
+
+uboard:
+  external:
+    gitlab:
+      url: ${GITLAB_API_URL:https://gitlab.com}
+      apiSuffix: ${GITLAB_API_SUFFIX:/api/v4}
