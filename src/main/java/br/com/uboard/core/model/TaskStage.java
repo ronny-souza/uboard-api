@@ -78,8 +78,28 @@ public class TaskStage {
         }
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getUuid() {
         return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getPriority() {
@@ -102,12 +122,28 @@ public class TaskStage {
         return stage;
     }
 
+    public void setStage(TaskOperationStageEnum stage) {
+        this.stage = stage;
+    }
+
     public String getPayload() {
         return payload;
     }
 
+    public void setPayload(String payload) {
+        this.payload = payload;
+    }
+
+    public String getError() {
+        return error;
+    }
+
     public void setError(String error) {
         this.error = error;
+    }
+
+    public String getCause() {
+        return cause;
     }
 
     public void setCause(String cause) {
@@ -124,6 +160,14 @@ public class TaskStage {
 
     public boolean isSensitivePayload() {
         return sensitivePayload;
+    }
+
+    public void setSensitivePayload(boolean sensitivePayload) {
+        this.sensitivePayload = sensitivePayload;
+    }
+
+    public String getResult() {
+        return result;
     }
 
     public void setResult(String result) {

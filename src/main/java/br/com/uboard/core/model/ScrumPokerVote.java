@@ -36,16 +36,32 @@ public class ScrumPokerVote {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getUserIdentifier() {
         return userIdentifier;
+    }
+
+    public void setUserIdentifier(String userIdentifier) {
+        this.userIdentifier = userIdentifier;
     }
 
     public String getRoomIdentifier() {
         return roomIdentifier;
     }
 
+    public void setRoomIdentifier(String roomIdentifier) {
+        this.roomIdentifier = roomIdentifier;
+    }
+
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getVote() {
