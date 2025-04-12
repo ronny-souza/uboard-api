@@ -6,9 +6,11 @@ import br.com.uboard.common.CustomObjectMapper;
 import br.com.uboard.configuration.RabbitMQConfiguration;
 import br.com.uboard.core.model.Task;
 import br.com.uboard.core.model.TaskStage;
+import br.com.uboard.core.model.User;
 import br.com.uboard.core.model.operations.CreateTaskForm;
 import br.com.uboard.core.model.transport.TaskDTO;
 import br.com.uboard.core.repository.TaskRepository;
+import br.com.uboard.core.repository.UserRepository;
 import br.com.uboard.exception.CreateTaskException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +26,18 @@ public class CreateTaskService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CreateTaskService.class);
     private final CustomObjectMapper customObjectMapper;
     private final TaskRepository taskRepository;
+    private final UserRepository userRepository;
     private final ApplicationContext applicationContext;
     private final RabbitTemplate rabbitTemplate;
 
     public CreateTaskService(CustomObjectMapper customObjectMapper,
                              TaskRepository taskRepository,
-                             ApplicationContext applicationContext, RabbitTemplate rabbitTemplate) {
+                             UserRepository userRepository,
+                             ApplicationContext applicationContext,
+                             RabbitTemplate rabbitTemplate) {
         this.customObjectMapper = customObjectMapper;
         this.taskRepository = taskRepository;
+        this.userRepository = userRepository;
         this.applicationContext = applicationContext;
         this.rabbitTemplate = rabbitTemplate;
     }
@@ -40,7 +46,8 @@ public class CreateTaskService {
     public TaskDTO create(CreateTaskForm form) throws CreateTaskException {
         try {
             LOGGER.info("Starting task logging {}...", form.getOperation().name());
-            Task task = new Task(form);
+            User user = this.userRepository.getUserByUuid(form.getSessionUser().id());
+            Task task = new Task(form, user);
 
             TaskBuilder taskBuilder = TaskBuilder.startWithTaskAndUser(task, form.getSessionUser());
             TaskStagesBuilderInterface taskStagesBuilder = this.applicationContext.getBean(

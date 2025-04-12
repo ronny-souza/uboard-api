@@ -7,6 +7,7 @@ import br.com.uboard.core.model.transport.SessionUserDTO;
 import br.com.uboard.core.service.CreateScrumPokerRoomService;
 import br.com.uboard.core.service.GetScrumPokerRoomService;
 import br.com.uboard.core.service.ListScrumPokerRoomVotesService;
+import br.com.uboard.exception.UserNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,7 +35,8 @@ public class ScrumPokerController {
     @PostMapping("/room")
     public ResponseEntity<ScrumPokerRoomDTO> createScrumPokerRoom(@AuthenticationPrincipal Jwt jwt,
                                                                   @RequestBody @Valid CreateScrumPokerRoomForm form,
-                                                                  UriComponentsBuilder uriComponentsBuilder) {
+                                                                  UriComponentsBuilder uriComponentsBuilder)
+            throws UserNotFoundException {
         SessionUserDTO sessionUserDTO = new SessionUserDTO(jwt);
         ScrumPokerRoomDTO response = this.createScrumPokerRoomService.createScrumPokerRoom(form, sessionUserDTO);
         return ResponseEntity.created(uriComponentsBuilder

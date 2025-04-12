@@ -2,8 +2,10 @@ package br.com.uboard.command;
 
 import br.com.uboard.common.CustomObjectMapper;
 import br.com.uboard.core.model.Credential;
+import br.com.uboard.core.model.User;
 import br.com.uboard.core.model.operations.PersistGitCredentialOnDatabaseForm;
 import br.com.uboard.core.repository.CredentialRepository;
+import br.com.uboard.core.repository.UserRepository;
 import br.com.uboard.exception.UboardApplicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +21,14 @@ public class PersistGitCredentialOnDatabaseCommand implements TaskStageCommand {
     private static final Logger LOGGER = LoggerFactory.getLogger(PersistGitCredentialOnDatabaseCommand.class);
     private final CustomObjectMapper customObjectMapper;
     private final CredentialRepository credentialRepository;
+    private final UserRepository userRepository;
 
     public PersistGitCredentialOnDatabaseCommand(CustomObjectMapper customObjectMapper,
-                                                 CredentialRepository credentialRepository) {
+                                                 CredentialRepository credentialRepository,
+                                                 UserRepository userRepository) {
         this.customObjectMapper = customObjectMapper;
         this.credentialRepository = credentialRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -34,7 +39,9 @@ public class PersistGitCredentialOnDatabaseCommand implements TaskStageCommand {
                 payload, PersistGitCredentialOnDatabaseForm.class
         );
 
-        this.credentialRepository.save(new Credential(form));
+        User user = this.userRepository.getUserByUuid(form.userIdentifier());
+
+        this.credentialRepository.save(new Credential(form, user));
         return Optional.empty();
     }
 }

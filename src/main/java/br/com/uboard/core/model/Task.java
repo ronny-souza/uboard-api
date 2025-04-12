@@ -22,8 +22,9 @@ public class Task {
     @Column(unique = true, nullable = false)
     private String uuid;
 
-    @Column(nullable = false)
-    private String userIdentifier;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, columnDefinition = "VARCHAR(32)")
@@ -49,12 +50,12 @@ public class Task {
     private List<TaskStage> stages = new ArrayList<>();
 
     public Task() {
-
+        this.progress = 0;
     }
 
-    public Task(CreateTaskForm form) {
+    public Task(CreateTaskForm form, User user) {
         this.uuid = UUID.randomUUID().toString();
-        this.userIdentifier = form.getSessionUser().id();
+        this.user = user;
         this.operation = form.getOperation();
         this.status = TaskStatusEnum.CREATED;
         this.detail = form.getDetail();
@@ -71,8 +72,36 @@ public class Task {
         this.setProgress((int) percentageOfCompletion);
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getUuid() {
         return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public TaskOperationEnum getOperation() {
+        return operation;
+    }
+
+    public void setOperation(TaskOperationEnum operation) {
+        this.operation = operation;
     }
 
     public TaskStatusEnum getStatus() {
@@ -87,6 +116,10 @@ public class Task {
         return detail;
     }
 
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
     public Integer getProgress() {
         return progress;
     }
@@ -99,12 +132,16 @@ public class Task {
         return createdAt;
     }
 
-    public void setFinishedAt(LocalDateTime finishedAt) {
-        this.finishedAt = finishedAt;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public TaskOperationEnum getOperation() {
-        return operation;
+    public LocalDateTime getFinishedAt() {
+        return finishedAt;
+    }
+
+    public void setFinishedAt(LocalDateTime finishedAt) {
+        this.finishedAt = finishedAt;
     }
 
     public List<TaskStage> getStages() {

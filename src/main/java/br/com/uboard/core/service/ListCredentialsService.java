@@ -17,6 +17,6 @@ public class ListCredentialsService {
     }
 
     public Page<CredentialDTO> listCredentialsAsPage(Pageable pageable, SessionUserDTO sessionUserDTO) {
-        return this.credentialRepository.findAllByUserIdentifier(sessionUserDTO.id(), pageable).map(CredentialDTO::new);
+        return this.credentialRepository.findAllByUserUuid(sessionUserDTO.id(), pageable).map(CredentialDTO::new);
     }
 }

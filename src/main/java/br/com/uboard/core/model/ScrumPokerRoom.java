@@ -1,7 +1,6 @@
 package br.com.uboard.core.model;
 
 import br.com.uboard.core.model.operations.CreateScrumPokerRoomForm;
-import br.com.uboard.core.model.transport.SessionUserDTO;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -21,40 +20,53 @@ public class ScrumPokerRoom {
     private String name;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private final LocalDateTime createdAt;
 
     private boolean closed;
 
     private LocalDateTime closedAt;
 
-    @Column(nullable = false)
-    private String userIdentifier;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean isVotesVisible;
 
     public ScrumPokerRoom() {
-
+        this.createdAt = LocalDateTime.now();
     }
 
-    public ScrumPokerRoom(CreateScrumPokerRoomForm form, SessionUserDTO sessionUserDTO) {
+    public ScrumPokerRoom(CreateScrumPokerRoomForm form, User user) {
         this.uuid = UUID.randomUUID().toString();
         this.name = form.name();
         this.createdAt = LocalDateTime.now();
         this.closed = false;
-        this.userIdentifier = sessionUserDTO.id();
+        this.user = user;
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getUuid() {
         return uuid;
     }
 
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -77,8 +89,12 @@ public class ScrumPokerRoom {
         this.closedAt = closedAt;
     }
 
-    public String getUserIdentifier() {
-        return userIdentifier;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public boolean isVotesVisible() {

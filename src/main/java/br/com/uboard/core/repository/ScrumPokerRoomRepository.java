@@ -9,7 +9,7 @@ public interface ScrumPokerRoomRepository extends JpaRepository<ScrumPokerRoom, 
 
     Optional<ScrumPokerRoom> findByUuid(String uuid);
 
-    Optional<ScrumPokerRoom> findByUuidAndUserIdentifier(String uuid, String userIdentifier);
+    Optional<ScrumPokerRoom> findByUuidAndUserUuid(String uuid, String userUuid);
 
 }
 

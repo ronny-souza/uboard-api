@@ -19,7 +19,7 @@ public record ScrumPokerRoomDTO(String uuid,
                 scrumPokerRoom.getCreatedAt(),
                 scrumPokerRoom.isClosed(),
                 scrumPokerRoom.getClosedAt(),
-                scrumPokerRoom.getUserIdentifier(),
+                scrumPokerRoom.getUser().getUuid(),
                 scrumPokerRoom.isVotesVisible()
         );
     }
