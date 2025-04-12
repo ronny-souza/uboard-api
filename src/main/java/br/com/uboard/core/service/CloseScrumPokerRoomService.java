@@ -23,7 +23,7 @@ public class CloseScrumPokerRoomService {
     public void closeScrumPokerRoom(String roomIdentifier, String userIdentifier) throws ScrumPokerRoomNotFoundException {
         LOGGER.debug("Starting closing scrum poker room {}...", roomIdentifier);
 
-        ScrumPokerRoom scrumPokerRoom = this.scrumPokerRoomRepository.findByUuidAndUserIdentifier(roomIdentifier, userIdentifier)
+        ScrumPokerRoom scrumPokerRoom = this.scrumPokerRoomRepository.findByUuidAndUserUuid(roomIdentifier, userIdentifier)
                 .orElseThrow(() -> new ScrumPokerRoomNotFoundException(
                                 String.format("Scrum poker room %s is not found for this user %s",
                                         roomIdentifier,
