@@ -29,20 +29,21 @@ public class Credential {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
-    private String userIdentifier;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Credential() {
 
     }
 
-    public Credential(PersistGitCredentialOnDatabaseForm form) {
+    public Credential(PersistGitCredentialOnDatabaseForm form, User user) {
         this.uuid = form.uuid();
         this.name = form.name();
         this.url = form.url();
         this.type = form.type();
         this.createdAt = LocalDateTime.now();
-        this.userIdentifier = form.userIdentifier();
+        this.user = user;
     }
 
     public Long getId() {
@@ -93,11 +94,11 @@ public class Credential {
         this.createdAt = createdAt;
     }
 
-    public String getUserIdentifier() {
-        return userIdentifier;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserIdentifier(String userIdentifier) {
-        this.userIdentifier = userIdentifier;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

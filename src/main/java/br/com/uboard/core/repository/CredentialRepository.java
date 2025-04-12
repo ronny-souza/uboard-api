@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CredentialRepository extends JpaRepository<Credential, Long> {
 
-    Page<Credential> findAllByUserIdentifier(String userIdentifier, Pageable pageable);
+    Page<Credential> findAllByUserUuid(String uuid, Pageable pageable);
 }
