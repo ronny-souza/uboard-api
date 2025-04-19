@@ -1,6 +1,7 @@
 package br.com.uboard.core.controller;
 
 import br.com.uboard.core.model.enums.TaskOperationEnum;
+import br.com.uboard.core.model.filters.CredentialFiltersDTO;
 import br.com.uboard.core.model.operations.CreateCredentialForm;
 import br.com.uboard.core.model.operations.CreateTaskForm;
 import br.com.uboard.core.model.transport.CredentialDTO;
@@ -35,9 +36,12 @@ public class CredentialController {
 
     @GetMapping
     public ResponseEntity<Page<CredentialDTO>> listCredentialsAsPage(@AuthenticationPrincipal Jwt jwt,
-                                                                     @PageableDefault(direction = Sort.Direction.ASC, sort = {"name"}) Pageable pageable) {
+                                                                     @PageableDefault(direction = Sort.Direction.DESC, sort = {"name"}) Pageable pageable,
+                                                                     CredentialFiltersDTO filters) {
         SessionUserDTO sessionUserDTO = new SessionUserDTO(jwt);
-        Page<CredentialDTO> credentialsPage = this.listCredentialsService.listCredentialsAsPage(pageable, sessionUserDTO);
+        Page<CredentialDTO> credentialsPage = this.listCredentialsService.listCredentialsAsPage(
+                pageable, sessionUserDTO, filters
+        );
         return ResponseEntity.ok(credentialsPage);
     }
 
