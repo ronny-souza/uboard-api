@@ -4,8 +4,8 @@ import br.com.uboard.configuration.RabbitMQConfiguration;
 import br.com.uboard.core.model.Task;
 import br.com.uboard.core.model.TaskStage;
 import br.com.uboard.core.model.enums.TaskStatusEnum;
-import br.com.uboard.core.model.operations.TaskStatusForm;
 import br.com.uboard.core.model.operations.TaskStageGroupForm;
+import br.com.uboard.core.model.operations.TaskStatusForm;
 import br.com.uboard.core.model.transport.TaskStageDTO;
 import br.com.uboard.core.repository.TaskRepository;
 import br.com.uboard.core.repository.TaskStageRepository;
@@ -56,6 +56,7 @@ public class RunningTaskEventListener {
                     RabbitMQConfiguration.UBOARD_TASK_COMPLETED_EVENT,
                     new TaskStatusForm(task.getUuid(), TaskStatusEnum.FAILED)
             );
+            return;
         }
 
         Boolean allTaskStagesAreCompleted = this.taskStageRepository.allStagesOfTaskAreInCertainState(TaskStatusEnum.COMPLETED, task.getUuid());

@@ -72,7 +72,7 @@ public class RunTaskStageEventListener {
                     RabbitMQConfiguration.UBOARD_TASK_STAGE_RESULT_EVENT,
                     new TaskStageResultForm(
                             taskStageDTO.uuid(),
-                            TaskStatusEnum.COMPLETED,
+                            TaskStatusEnum.FAILED,
                             "FAILED",
                             error,
                             errorClassName
