@@ -11,7 +11,8 @@ public record TaskDTO(String uuid,
                       TaskStatusEnum status,
                       String detail,
                       Integer progress,
-                      LocalDateTime createdAt) {
+                      LocalDateTime createdAt,
+                      LocalDateTime finishedAt) {
 
     public TaskDTO(Task task) {
         this(
@@ -20,7 +21,8 @@ public record TaskDTO(String uuid,
                 task.getStatus(),
                 task.getDetail(),
                 task.getProgress(),
-                task.getCreatedAt()
+                task.getCreatedAt(),
+                task.getFinishedAt()
         );
     }
 }

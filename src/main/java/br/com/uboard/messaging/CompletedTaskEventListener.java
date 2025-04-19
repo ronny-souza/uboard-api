@@ -45,6 +45,7 @@ public class CompletedTaskEventListener {
         } else {
             LOGGER.error("Task not completed. Updating records and finalizing processing...");
             task.setStatus(form.status());
+            task.setFinishedAt(LocalDateTime.now());
             task.calculateProgress();
         }
 

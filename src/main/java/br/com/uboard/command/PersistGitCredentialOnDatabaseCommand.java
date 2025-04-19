@@ -44,4 +44,5 @@ public class PersistGitCredentialOnDatabaseCommand implements TaskStageCommand {
         this.credentialRepository.save(new Credential(form, user));
         return Optional.empty();
     }
+    
 }
