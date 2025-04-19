@@ -32,6 +32,10 @@ public class TaskBuilder {
         this.stages.add(taskStage);
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
     public List<TaskStage> getStages() {
         return stages;
     }

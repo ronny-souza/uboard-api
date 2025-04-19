@@ -1,0 +1,43 @@
+package br.com.uboard.common;
+
+import br.com.uboard.exception.UboardJsonProcessingException;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+class CustomObjectMapperTest {
+
+    private CustomObjectMapper customObjectMapper;
+
+    @BeforeEach
+    void init() {
+        this.customObjectMapper = new CustomObjectMapper();
+    }
+
+    @Test
+    @DisplayName("Should convert an object in a JSON string")
+    void shouldConvertAnObjectInJsonString() throws UboardJsonProcessingException {
+        JsonTestObject jsonTestObject = new JsonTestObject("name");
+        String jsonString = this.customObjectMapper.toJson(jsonTestObject);
+        assertNotNull(jsonString);
+    }
+
+    @Test
+    @DisplayName("Should convert a JSON string in an object")
+    void shouldConvertJsonStringInObject() throws UboardJsonProcessingException {
+        JsonTestObject jsonTestObject = this.customObjectMapper.fromJson("{\"name\":\"name\"}", JsonTestObject.class);
+        assertNotNull(jsonTestObject);
+    }
+
+    @Test
+    @DisplayName("Should throw exception when is trying to convert an invalid JSON")
+    void shouldThrowExceptionWhenIsTryingToConvertAnInvalidJson() {
+        assertThrows(UboardJsonProcessingException.class, () -> this.customObjectMapper.fromJson("{\"name\":\"name\"", JsonTestObject.class));
+    }
+
+    protected record JsonTestObject(String name) {
+    }
+}
