@@ -13,25 +13,18 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-public class Task {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(unique = true, nullable = false)
-    private String uuid;
+public class Task extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "VARCHAR(32)")
+    @Column(nullable = false, columnDefinition = "varchar(32)")
     private TaskOperationEnum operation;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "VARCHAR(32)")
+    @Column(nullable = false, columnDefinition = "varchar(32)")
     private TaskStatusEnum status;
 
     @Column(nullable = false)
@@ -54,7 +47,7 @@ public class Task {
     }
 
     public Task(CreateTaskForm form, User user) {
-        this.uuid = UUID.randomUUID().toString();
+        setUuid(UUID.randomUUID().toString());
         this.user = user;
         this.operation = form.getOperation();
         this.status = TaskStatusEnum.CREATED;
@@ -71,23 +64,7 @@ public class Task {
         double percentageOfCompletion = ((totalNumberOfSuccessfullyStages * 100) / totalNumberOfStages);
         this.setProgress((int) percentageOfCompletion);
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
+    
     public User getUser() {
         return user;
     }

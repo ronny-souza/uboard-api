@@ -1,18 +1,13 @@
 package br.com.uboard.core.model;
 
 import br.com.uboard.core.model.transport.SessionUserDTO;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    @Column(nullable = false, unique = true)
-    private String uuid;
+public class User extends BaseEntity {
 
     @Column(nullable = false)
     private String username;
@@ -30,27 +25,11 @@ public class User {
     }
 
     public User(SessionUserDTO sessionUserDTO) {
-        this.uuid = sessionUserDTO.id();
+        setUuid(sessionUserDTO.id());
         this.username = sessionUserDTO.username();
         this.email = sessionUserDTO.email();
         this.firstName = sessionUserDTO.firstName();
         this.lastName = sessionUserDTO.lastName();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getUsername() {
