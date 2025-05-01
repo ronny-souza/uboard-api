@@ -37,7 +37,7 @@ public class RunningTaskEventListener {
 
     @Transactional
     @RabbitListener(queues = RabbitMQConfiguration.UBOARD_TASK_EXECUTION_EVENT)
-    void execute(String taskIdentifier) {
+    public void execute(String taskIdentifier) {
         if (!StringUtils.hasText(taskIdentifier)) {
             LOGGER.error("The task identifier could not be found during its execution");
             return;

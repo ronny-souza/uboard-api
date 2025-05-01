@@ -3,7 +3,7 @@ package br.com.uboard.command;
 import br.com.uboard.common.CustomObjectMapper;
 import br.com.uboard.core.model.Credential;
 import br.com.uboard.core.model.User;
-import br.com.uboard.core.model.operations.PersistGitCredentialOnDatabaseForm;
+import br.com.uboard.core.model.operations.PersistGitCredentialInDatabaseForm;
 import br.com.uboard.core.repository.CredentialRepository;
 import br.com.uboard.core.repository.UserRepository;
 import br.com.uboard.exception.UboardApplicationException;
@@ -17,13 +17,13 @@ import java.util.Optional;
 
 @Lazy
 @Component
-public class PersistGitCredentialOnDatabaseCommand implements TaskStageCommand {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PersistGitCredentialOnDatabaseCommand.class);
+public class PersistGitCredentialInDatabaseCommand implements TaskStageCommand {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersistGitCredentialInDatabaseCommand.class);
     private final CustomObjectMapper customObjectMapper;
     private final CredentialRepository credentialRepository;
     private final UserRepository userRepository;
 
-    public PersistGitCredentialOnDatabaseCommand(CustomObjectMapper customObjectMapper,
+    public PersistGitCredentialInDatabaseCommand(CustomObjectMapper customObjectMapper,
                                                  CredentialRepository credentialRepository,
                                                  UserRepository userRepository) {
         this.customObjectMapper = customObjectMapper;
@@ -35,8 +35,8 @@ public class PersistGitCredentialOnDatabaseCommand implements TaskStageCommand {
     @Transactional
     public Optional<Object> execute(String payload) throws UboardApplicationException {
         LOGGER.info("Persisting credential in database...");
-        PersistGitCredentialOnDatabaseForm form = this.customObjectMapper.fromJson(
-                payload, PersistGitCredentialOnDatabaseForm.class
+        PersistGitCredentialInDatabaseForm form = this.customObjectMapper.fromJson(
+                payload, PersistGitCredentialInDatabaseForm.class
         );
 
         User user = this.userRepository.getUserByUuid(form.userIdentifier());
@@ -44,5 +44,4 @@ public class PersistGitCredentialOnDatabaseCommand implements TaskStageCommand {
         this.credentialRepository.save(new Credential(form, user));
         return Optional.empty();
     }
-    
 }

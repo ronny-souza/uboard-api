@@ -1,8 +1,8 @@
 package br.com.uboard.core.model.operations;
 
-import br.com.uboard.core.model.enums.GitProviderEnum;
+import br.com.uboard.core.model.enums.ProviderEnum;
 
 public record ValidateGitTokenOnProviderForm(String url,
                                              String token,
-                                             GitProviderEnum type) {
+                                             ProviderEnum type) {
 }

@@ -1,7 +1,7 @@
 package br.com.uboard.core.repository.specification;
 
 import br.com.uboard.core.model.Credential;
-import br.com.uboard.core.model.enums.GitProviderEnum;
+import br.com.uboard.core.model.enums.ProviderEnum;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Objects;
@@ -27,7 +27,7 @@ public class CredentialSpecification {
                 criteriaBuilder.like(criteriaBuilder.lower(root.get("url")), "%" + url.toLowerCase() + "%");
     }
 
-    public static Specification<Credential> hasType(GitProviderEnum type) {
+    public static Specification<Credential> hasType(ProviderEnum type) {
         return (root, query, criteriaBuilder) ->
                 type == null ? null : criteriaBuilder.equal(root.get("type"), type);
     }

@@ -1,7 +1,7 @@
 package br.com.uboard.core.model;
 
-import br.com.uboard.core.model.enums.GitProviderEnum;
-import br.com.uboard.core.model.operations.PersistGitCredentialOnDatabaseForm;
+import br.com.uboard.core.model.enums.ProviderEnum;
+import br.com.uboard.core.model.operations.PersistGitCredentialInDatabaseForm;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +25,7 @@ class CredentialTest {
         credential.setUuid("uuid");
         credential.setName("name");
         credential.setUrl("url");
-        credential.setType(GitProviderEnum.GITLAB);
+        credential.setType(ProviderEnum.GITLAB);
         credential.setCreatedAt(currentDate);
         credential.setUser(userAsMock);
 
@@ -34,7 +34,7 @@ class CredentialTest {
         assertEquals("uuid", credential.getUuid());
         assertEquals("name", credential.getName());
         assertEquals("url", credential.getUrl());
-        assertEquals(GitProviderEnum.GITLAB, credential.getType());
+        assertEquals(ProviderEnum.GITLAB, credential.getType());
         assertEquals(currentDate, credential.getCreatedAt());
         assertEquals(userAsMock, credential.getUser());
     }
@@ -42,13 +42,13 @@ class CredentialTest {
     @Test
     @DisplayName("Should return an instance from the form args constructor")
     void shouldReturnAnInstanceFromTheFormArgsConstructor() {
-        PersistGitCredentialOnDatabaseForm formAsMock = mock(PersistGitCredentialOnDatabaseForm.class);
+        PersistGitCredentialInDatabaseForm formAsMock = mock(PersistGitCredentialInDatabaseForm.class);
         User userAsMock = mock(User.class);
 
         when(formAsMock.uuid()).thenReturn("uuid");
         when(formAsMock.name()).thenReturn("name");
         when(formAsMock.url()).thenReturn("url");
-        when(formAsMock.type()).thenReturn(GitProviderEnum.GITLAB);
+        when(formAsMock.type()).thenReturn(ProviderEnum.GITLAB);
 
         Credential credential = new Credential(formAsMock, userAsMock);
         assertNotNull(credential);
@@ -56,7 +56,7 @@ class CredentialTest {
         assertEquals("uuid", credential.getUuid());
         assertEquals("name", credential.getName());
         assertEquals("url", credential.getUrl());
-        assertEquals(GitProviderEnum.GITLAB, credential.getType());
+        assertEquals(ProviderEnum.GITLAB, credential.getType());
         assertEquals(userAsMock, credential.getUser());
     }
 }

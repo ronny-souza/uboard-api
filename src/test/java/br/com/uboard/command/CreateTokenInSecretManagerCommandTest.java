@@ -43,7 +43,7 @@ class CreateTokenInSecretManagerCommandTest {
         ArgumentCaptor<String> vaultPathArgumentCaptor = forClass(String.class);
         this.createTokenInSecretManagerCommand.execute("{}");
 
-        verify(this.vaultService).addSecret(vaultPathArgumentCaptor.capture(), anyMap());
+        verify(this.vaultService).registerSecretInVaultService(vaultPathArgumentCaptor.capture(), anyMap());
 
         String expectedPath = String.format("users/%s/credentials/%s", "123", "321");
         String path = vaultPathArgumentCaptor.getValue();

@@ -11,7 +11,7 @@ public record TaskStageDTO(String uuid,
         this(
                 taskStage.getUuid(),
                 taskStage.getStage(),
-                taskStage.getPayload()
+                taskStage.getPayloadWithPayloadInjections()
         );
     }
 }

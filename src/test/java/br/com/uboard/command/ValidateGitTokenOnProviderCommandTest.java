@@ -1,10 +1,10 @@
 package br.com.uboard.command;
 
 import br.com.uboard.common.CustomObjectMapper;
-import br.com.uboard.core.model.enums.GitProviderEnum;
+import br.com.uboard.core.model.enums.ProviderEnum;
 import br.com.uboard.core.model.external.GitUserInterface;
 import br.com.uboard.core.model.operations.ValidateGitTokenOnProviderForm;
-import br.com.uboard.core.service.GitService;
+import br.com.uboard.core.service.GetCurrentGitUserService;
 import br.com.uboard.exception.UboardApplicationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ class ValidateGitTokenOnProviderCommandTest {
     private CustomObjectMapper customObjectMapper;
 
     @Mock
-    private GitService gitService;
+    private GetCurrentGitUserService getCurrentGitUserService;
 
     @Test
     @DisplayName("Should execute token validation in provider")
@@ -37,13 +37,13 @@ class ValidateGitTokenOnProviderCommandTest {
         when(this.customObjectMapper.fromJson(anyString(), eq(ValidateGitTokenOnProviderForm.class))).thenReturn(formAsMock);
         when(formAsMock.url()).thenReturn("url");
         when(formAsMock.token()).thenReturn("token");
-        when(formAsMock.type()).thenReturn(GitProviderEnum.GITLAB);
-        when(this.gitService.getCurrentUser(anyString(), anyString(), any(GitProviderEnum.class))).thenReturn(gitUserAsMock);
+        when(formAsMock.type()).thenReturn(ProviderEnum.GITLAB);
+        when(this.getCurrentGitUserService.getCurrentUser(anyString(), anyString(), any(ProviderEnum.class))).thenReturn(gitUserAsMock);
         when(gitUserAsMock.getUsername()).thenReturn("username");
 
         this.validateGitTokenOnProviderCommand.execute("{}");
 
-        verify(this.gitService).getCurrentUser(anyString(), anyString(), any(GitProviderEnum.class));
+        verify(this.getCurrentGitUserService).getCurrentUser(anyString(), anyString(), any(ProviderEnum.class));
 
     }
 }

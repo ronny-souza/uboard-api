@@ -1,6 +1,6 @@
 package br.com.uboard.core.model.enums;
 
-public enum GitProviderEnum {
+public enum ProviderEnum {
     GITLAB,
     GITHUB
 }

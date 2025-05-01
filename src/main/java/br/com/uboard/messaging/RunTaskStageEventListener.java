@@ -1,9 +1,6 @@
 package br.com.uboard.messaging;
 
-import br.com.uboard.command.CreateTokenInSecretManagerCommand;
-import br.com.uboard.command.PersistGitCredentialOnDatabaseCommand;
-import br.com.uboard.command.TaskStageCommand;
-import br.com.uboard.command.ValidateGitTokenOnProviderCommand;
+import br.com.uboard.command.*;
 import br.com.uboard.common.CustomObjectMapper;
 import br.com.uboard.configuration.RabbitMQConfiguration;
 import br.com.uboard.core.model.enums.TaskOperationStageEnum;
@@ -103,7 +100,8 @@ public class RunTaskStageEventListener {
         Class<? extends TaskStageCommand> command = switch (operation) {
             case CHECK_GIT_TOKEN_VALIDITY_IN_PROVIDER -> ValidateGitTokenOnProviderCommand.class;
             case REGISTER_TOKEN_IN_SECRETS_MANAGER -> CreateTokenInSecretManagerCommand.class;
-            case PERSIST_GIT_CREDENTIAL_IN_DATABASE -> PersistGitCredentialOnDatabaseCommand.class;
+            case PERSIST_GIT_CREDENTIAL_IN_DATABASE -> PersistGitCredentialInDatabaseCommand.class;
+            case PERSIST_ORGANIZATION_IN_DATABASE -> PersistOrganizationInDatabaseCommand.class;
         };
 
         return this.applicationContext.getBean(command);

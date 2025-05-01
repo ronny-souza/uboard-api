@@ -1,20 +1,16 @@
 package br.com.uboard.core.model;
 
 import br.com.uboard.core.model.operations.CreateScrumPokerRoomForm;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-public class ScrumPokerRoom {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(unique = true, nullable = false)
-    private String uuid;
+public class ScrumPokerRoom extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
@@ -38,27 +34,11 @@ public class ScrumPokerRoom {
     }
 
     public ScrumPokerRoom(CreateScrumPokerRoomForm form, User user) {
-        this.uuid = UUID.randomUUID().toString();
+        setUuid(UUID.randomUUID().toString());
         this.name = form.name();
         this.createdAt = LocalDateTime.now();
         this.closed = false;
         this.user = user;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getName() {

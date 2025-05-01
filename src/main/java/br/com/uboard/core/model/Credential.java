@@ -1,20 +1,13 @@
 package br.com.uboard.core.model;
 
-import br.com.uboard.core.model.enums.GitProviderEnum;
-import br.com.uboard.core.model.operations.PersistGitCredentialOnDatabaseForm;
+import br.com.uboard.core.model.enums.ProviderEnum;
+import br.com.uboard.core.model.operations.PersistGitCredentialInDatabaseForm;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-public class Credential {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(unique = true, nullable = false)
-    private String uuid;
+public class Credential extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
@@ -24,7 +17,7 @@ public class Credential {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private GitProviderEnum type;
+    private ProviderEnum type;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
@@ -37,29 +30,13 @@ public class Credential {
 
     }
 
-    public Credential(PersistGitCredentialOnDatabaseForm form, User user) {
-        this.uuid = form.uuid();
+    public Credential(PersistGitCredentialInDatabaseForm form, User user) {
+        setUuid(form.uuid());
         this.name = form.name();
         this.url = form.url();
         this.type = form.type();
         this.createdAt = LocalDateTime.now();
         this.user = user;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getName() {
@@ -78,11 +55,11 @@ public class Credential {
         this.url = url;
     }
 
-    public GitProviderEnum getType() {
+    public ProviderEnum getType() {
         return type;
     }
 
-    public void setType(GitProviderEnum type) {
+    public void setType(ProviderEnum type) {
         this.type = type;
     }
 

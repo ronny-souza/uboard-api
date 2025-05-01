@@ -2,20 +2,19 @@ package br.com.uboard.core.model;
 
 import br.com.uboard.core.model.enums.TaskOperationStageEnum;
 import br.com.uboard.core.model.enums.TaskStatusEnum;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.persistence.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-public class TaskStage {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(unique = true, nullable = false)
-    private String uuid;
+public class TaskStage extends BaseEntity {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TaskStage.class);
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
@@ -23,11 +22,11 @@ public class TaskStage {
     private Integer priority;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "VARCHAR(32)")
+    @Column(nullable = false, columnDefinition = "varchar(32)")
     private TaskStatusEnum status;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "varchar(255)")
     private TaskOperationStageEnum stage;
 
     @Column(columnDefinition = "TEXT")
@@ -54,11 +53,14 @@ public class TaskStage {
 
     private LocalDateTime finishedAt;
 
+    @OneToMany(mappedBy = "target", cascade = CascadeType.ALL)
+    private List<TaskStagePayloadInjection> payloadInjections = new ArrayList<>();
+
     public TaskStage() {
     }
 
     public TaskStage(String description, TaskOperationStageEnum stage, String payload) {
-        this.uuid = UUID.randomUUID().toString();
+        setUuid(UUID.randomUUID().toString());
         this.description = description;
         this.status = TaskStatusEnum.CREATED;
         this.stage = stage;
@@ -78,20 +80,27 @@ public class TaskStage {
         }
     }
 
-    public Long getId() {
-        return id;
+    public TaskStage addPayloadInjection(TaskStagePayloadInjection inputInjection) {
+        inputInjection.setTarget(this);
+        this.payloadInjections.add(inputInjection);
+        return this;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getPayloadWithPayloadInjections() {
+        String currentPayload = this.payload;
+        if (this.payloadInjections.isEmpty()) {
+            return currentPayload;
+        }
 
-    public String getUuid() {
-        return uuid;
-    }
+        for (TaskStagePayloadInjection payloadInjection : this.payloadInjections) {
+            try {
+                currentPayload = payloadInjection.injectAttributesInTargetPayload(this.payload);
+            } catch (JsonProcessingException e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+        return currentPayload;
     }
 
     public String getDescription() {
@@ -188,5 +197,9 @@ public class TaskStage {
 
     public void setFinishedAt(LocalDateTime finishedAt) {
         this.finishedAt = finishedAt;
+    }
+
+    public List<TaskStagePayloadInjection> getPayloadInjections() {
+        return payloadInjections;
     }
 }

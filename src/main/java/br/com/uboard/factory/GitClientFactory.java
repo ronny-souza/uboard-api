@@ -2,7 +2,7 @@ package br.com.uboard.factory;
 
 import br.com.uboard.client.GitClientService;
 import br.com.uboard.client.gitlab.GitlabClientService;
-import br.com.uboard.core.model.enums.GitProviderEnum;
+import br.com.uboard.core.model.enums.ProviderEnum;
 import br.com.uboard.exception.GitClientNotFoundException;
 import feign.Feign;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class GitClientFactory {
         this.feignBuilder = feignBuilder;
     }
 
-    public GitClientService getClient(GitProviderEnum provider, String url) throws GitClientNotFoundException {
+    public GitClientService getClient(ProviderEnum provider, String url) throws GitClientNotFoundException {
         Class<? extends GitClientService> clientType = switch (provider) {
             case GITLAB -> GitlabClientService.class;
             default -> throw new GitClientNotFoundException(
@@ -44,15 +44,15 @@ public class GitClientFactory {
         return this.feignBuilder.target(clientType, url);
     }
 
-    public String getApiUriAsString(String url, GitProviderEnum provider) {
+    public String getApiUriAsString(String url, ProviderEnum provider) {
         return switch (provider) {
             case GITLAB -> StringUtils.hasText(url) ? this.getGitlabApiUrl(url) : this.getGitlabDefaultApiUrl();
             case GITHUB -> "https://api.github.com";
         };
     }
 
-    public Map<String, String> getDefaultHeaders(String token, GitProviderEnum provider) {
-        if (provider.equals(GitProviderEnum.GITLAB)) {
+    public Map<String, String> getDefaultRequestHeaders(String token, ProviderEnum provider) {
+        if (provider.equals(ProviderEnum.GITLAB)) {
             Map<String, String> headers = new HashMap<>();
             headers.put("Authorization", "Bearer " + token);
             headers.put("Accept", MediaType.APPLICATION_JSON_VALUE);
