@@ -3,7 +3,7 @@ package br.com.uboard.command;
 import br.com.uboard.common.CustomObjectMapper;
 import br.com.uboard.core.model.Credential;
 import br.com.uboard.core.model.User;
-import br.com.uboard.core.model.enums.GitProviderEnum;
+import br.com.uboard.core.model.enums.ProviderEnum;
 import br.com.uboard.core.model.operations.PersistGitCredentialOnDatabaseForm;
 import br.com.uboard.core.repository.CredentialRepository;
 import br.com.uboard.core.repository.UserRepository;
@@ -45,7 +45,7 @@ class PersistGitCredentialOnDatabaseCommandTest {
         when(formAsMock.uuid()).thenReturn("uuid");
         when(formAsMock.name()).thenReturn("name");
         when(formAsMock.url()).thenReturn("url");
-        when(formAsMock.type()).thenReturn(GitProviderEnum.GITLAB);
+        when(formAsMock.type()).thenReturn(ProviderEnum.GITLAB);
 
         this.persistGitCredentialOnDatabaseCommand.execute("{}");
 
