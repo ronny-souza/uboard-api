@@ -33,9 +33,9 @@ public class CreateTokenInSecretManagerCommand implements TaskStageCommand {
         );
 
         Map<String, Object> data = Map.of("token", form.token());
-        String path = String.format("users/%s/credentials/%s", form.userIdentifier(), form.credentialIdentifier());
-        this.vaultService.addSecret(path, data);
-        
+        String path = String.format(VaultService.CREDENTIAL_PATH_PATTERN, form.userIdentifier(), form.credentialIdentifier());
+        this.vaultService.registerSecretInVaultService(path, data);
+
         return Optional.empty();
     }
 }
