@@ -4,7 +4,7 @@ import br.com.uboard.common.CustomObjectMapper;
 import br.com.uboard.core.model.Credential;
 import br.com.uboard.core.model.User;
 import br.com.uboard.core.model.enums.ProviderEnum;
-import br.com.uboard.core.model.operations.PersistGitCredentialOnDatabaseForm;
+import br.com.uboard.core.model.operations.PersistGitCredentialInDatabaseForm;
 import br.com.uboard.core.repository.CredentialRepository;
 import br.com.uboard.core.repository.UserRepository;
 import br.com.uboard.exception.UboardApplicationException;
@@ -20,10 +20,10 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class PersistGitCredentialOnDatabaseCommandTest {
+class PersistGitCredentialInDatabaseCommandTest {
 
     @InjectMocks
-    private PersistGitCredentialOnDatabaseCommand persistGitCredentialOnDatabaseCommand;
+    private PersistGitCredentialInDatabaseCommand persistGitCredentialInDatabaseCommand;
 
     @Mock
     private CustomObjectMapper customObjectMapper;
@@ -37,9 +37,9 @@ class PersistGitCredentialOnDatabaseCommandTest {
     @Test
     @DisplayName("Should persist the git credentials in database")
     void shouldPersistGitCredentialsInDatabase() throws UboardApplicationException {
-        PersistGitCredentialOnDatabaseForm formAsMock = mock(PersistGitCredentialOnDatabaseForm.class);
+        PersistGitCredentialInDatabaseForm formAsMock = mock(PersistGitCredentialInDatabaseForm.class);
 
-        when(this.customObjectMapper.fromJson(anyString(), eq(PersistGitCredentialOnDatabaseForm.class))).thenReturn(formAsMock);
+        when(this.customObjectMapper.fromJson(anyString(), eq(PersistGitCredentialInDatabaseForm.class))).thenReturn(formAsMock);
         when(formAsMock.userIdentifier()).thenReturn("userIdentifier");
         when(this.userRepository.getUserByUuid(anyString())).thenReturn(mock(User.class));
         when(formAsMock.uuid()).thenReturn("uuid");
@@ -47,7 +47,7 @@ class PersistGitCredentialOnDatabaseCommandTest {
         when(formAsMock.url()).thenReturn("url");
         when(formAsMock.type()).thenReturn(ProviderEnum.GITLAB);
 
-        this.persistGitCredentialOnDatabaseCommand.execute("{}");
+        this.persistGitCredentialInDatabaseCommand.execute("{}");
 
         verify(this.credentialRepository).save(any(Credential.class));
     }

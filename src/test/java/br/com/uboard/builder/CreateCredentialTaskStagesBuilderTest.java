@@ -2,7 +2,7 @@ package br.com.uboard.builder;
 
 import br.com.uboard.common.CustomObjectMapper;
 import br.com.uboard.core.model.TaskStage;
-import br.com.uboard.core.model.enums.GitProviderEnum;
+import br.com.uboard.core.model.enums.ProviderEnum;
 import br.com.uboard.core.model.enums.TaskOperationStageEnum;
 import br.com.uboard.core.model.operations.CreateCredentialForm;
 import br.com.uboard.core.model.transport.SessionUserDTO;
@@ -41,7 +41,7 @@ class CreateCredentialTaskStagesBuilderTest {
         when(this.customObjectMapper.fromJson(anyString(), Mockito.eq(CreateCredentialForm.class))).thenReturn(formAsMock);
         when(formAsMock.url()).thenReturn("url");
         when(formAsMock.token()).thenReturn("token");
-        when(formAsMock.type()).thenReturn(GitProviderEnum.GITLAB);
+        when(formAsMock.type()).thenReturn(ProviderEnum.GITLAB);
         when(taskBuilderAsMock.getSessionUser()).thenReturn(sessionUserDTOAsMock);
         when(sessionUserDTOAsMock.id()).thenReturn("userIdentifier");
         when(formAsMock.name()).thenReturn("name");
