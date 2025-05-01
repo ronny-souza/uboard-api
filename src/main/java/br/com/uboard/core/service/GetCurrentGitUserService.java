@@ -2,7 +2,7 @@ package br.com.uboard.core.service;
 
 import br.com.uboard.client.GitClientService;
 import br.com.uboard.common.CustomObjectMapper;
-import br.com.uboard.core.model.enums.GitProviderEnum;
+import br.com.uboard.core.model.enums.ProviderEnum;
 import br.com.uboard.core.model.external.GitUserInterface;
 import br.com.uboard.core.model.external.gitlab.GitlabUserDTO;
 import br.com.uboard.exception.GitClientNotFoundException;
@@ -18,18 +18,18 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 @Service
-public class GitGetCurrentUserService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GitGetCurrentUserService.class);
+public class GetCurrentGitUserService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GetCurrentGitUserService.class);
     private final GitClientFactory gitClientFactory;
     private final CustomObjectMapper customObjectMapper;
 
-    public GitGetCurrentUserService(GitClientFactory gitClientFactory,
+    public GetCurrentGitUserService(GitClientFactory gitClientFactory,
                                     CustomObjectMapper customObjectMapper) {
         this.gitClientFactory = gitClientFactory;
         this.customObjectMapper = customObjectMapper;
     }
 
-    public GitUserInterface getCurrentUser(String url, String token, GitProviderEnum provider)
+    public GitUserInterface getCurrentUser(String url, String token, ProviderEnum provider)
             throws GitClientNotFoundException, GitUserNotFoundException, InternalProcessingException {
         try {
             String uriWithSuffix = this.gitClientFactory.getApiUriAsString(url, provider);
