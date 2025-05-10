@@ -50,6 +50,8 @@ public class OpenFeignConfiguration {
         return Feign.builder()
                 .options(new Request.Options(Duration.ofMillis(this.connectionTimeout), Duration.ofMillis(readTimeout), false))
                 .retryer(Retryer.NEVER_RETRY)
+//                .logLevel(Logger.Level.FULL)
+//                .logger(new feign.slf4j.Slf4jLogger())
                 .contract(feignContract())
                 .decoder(feignDecoder())
                 .encoder(feignEncoder());
