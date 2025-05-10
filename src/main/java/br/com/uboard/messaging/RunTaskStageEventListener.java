@@ -102,6 +102,8 @@ public class RunTaskStageEventListener {
             case REGISTER_TOKEN_IN_SECRETS_MANAGER -> CreateTokenInSecretManagerCommand.class;
             case PERSIST_GIT_CREDENTIAL_IN_DATABASE -> PersistGitCredentialInDatabaseCommand.class;
             case PERSIST_ORGANIZATION_IN_DATABASE -> PersistOrganizationInDatabaseCommand.class;
+            case SYNCHRONIZE_MILESTONE_IN_DATABASE -> SynchronizeGitMilestoneInDatabaseCommand.class;
+            case SYNCHRONIZE_MILESTONE_ISSUES_IN_DATABASE -> SynchronizeMilestonesIssuesInDatabaseCommand.class;
         };
 
         return this.applicationContext.getBean(command);
