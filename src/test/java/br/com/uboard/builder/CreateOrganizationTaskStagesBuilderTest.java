@@ -53,16 +53,15 @@ class CreateOrganizationTaskStagesBuilderTest {
 
         verify(taskBuilderAsMock, times(1)).withStage(taskStageArgumentCaptor.capture());
 
-        TaskStage checkGitTokenValidityInProviderStage = taskStageArgumentCaptor.getAllValues()
+        TaskStage persistOrganizationInDatabaseStage = taskStageArgumentCaptor.getAllValues()
                 .stream()
                 .filter(taskStage -> taskStage.getStage().equals(TaskOperationStageEnum.PERSIST_ORGANIZATION_IN_DATABASE))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("Task stage %s is not found on stages", TaskOperationStageEnum.CHECK_GIT_TOKEN_VALIDITY_IN_PROVIDER)));
 
-        assertNotNull(checkGitTokenValidityInProviderStage);
-        assertNotNull(checkGitTokenValidityInProviderStage.getPayload());
-        assertEquals("Persisting organization in database", checkGitTokenValidityInProviderStage.getDescription());
-        assertTrue(checkGitTokenValidityInProviderStage.isSensitivePayload());
-
+        assertNotNull(persistOrganizationInDatabaseStage);
+        assertNotNull(persistOrganizationInDatabaseStage.getPayload());
+        assertEquals("Persisting organization in database", persistOrganizationInDatabaseStage.getDescription());
+        assertTrue(persistOrganizationInDatabaseStage.isSensitivePayload());
     }
 }
