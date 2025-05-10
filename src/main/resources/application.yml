@@ -37,6 +37,39 @@ spring:
     virtual-host: ${UBOARD_RABBITMQ_VIRTUAL_HOST:/}
     username: ${UBOARD_RABBITMQ_USERNAME:guest}
     password: ${UBOARD_RABBITMQ_PASSWORD:guest}
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: ${UBOARD_SCHEDULER_INITIALIZE_SCHEMA:never}
+      table-prefix: qrtz_
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceId: ${UBOARD_SCHEDULER_INSTANCE_ID:AUTO}
+            instanceName: ${UBOARD_SCHEDULER_INSTANCE_NAME:uboard-scheduler}
+          dataSource:
+            quartzDS:
+              provider: hikaricp
+              driver: org.postgresql.Driver
+              URL: ${UBOARD_DATABASE_URL:jdbc:postgresql://localhost:5432/uboard}
+              user: ${UBOARD_DATABASE_USERNAME:postgres}
+              password: ${UBOARD_DATABASE_PASSWORD:root}
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            isClustered: ${UBOARD_SCHEDULER_CLUSTERED:true}
+            misfireThreshold: ${UBOARD_SCHEDULER_MISFIRE_THRESHOLD:60000}
+            clusterCheckinInterval: ${UBOARD_SCHEDULER_CLUSTER_CHECKIN_INTERVAL:15000}
+            dataSource: quartzDS
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: ${UBOARD_SCHEDULER_THREAD_COUNT:150}
+logging:
+  level:
+    feign:
+      Logger: DEBUG
+    br.com.uboard: DEBUG
 
 app:
   vault:
