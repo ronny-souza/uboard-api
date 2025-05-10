@@ -8,8 +8,7 @@ import br.com.uboard.core.model.operations.OrganizationTargetForm;
 import br.com.uboard.core.model.transport.OrganizationDTO;
 import br.com.uboard.core.model.transport.SessionUserDTO;
 import br.com.uboard.core.model.transport.TaskDTO;
-import br.com.uboard.core.service.CreateTaskService;
-import br.com.uboard.core.service.ListOrganizationsService;
+import br.com.uboard.core.service.*;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,6 +52,15 @@ class OrganizationControllerTest {
 
     @MockitoBean
     private ListOrganizationsService listOrganizationsService;
+
+    @MockitoBean
+    private GetOrganizationService getOrganizationService;
+
+    @MockitoBean
+    private ListGitMilestonesService listGitMilestonesService;
+
+    @MockitoBean
+    private ListOrganizationMilestonesService listOrganizationMilestonesService;
 
     private ObjectMapper objectMapper;
 

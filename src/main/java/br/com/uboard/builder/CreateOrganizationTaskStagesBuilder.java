@@ -46,6 +46,5 @@ public class CreateOrganizationTaskStagesBuilder implements TaskStagesBuilderInt
                 createOrganizationFormAsJson,
                 true
         ));
-
     }
 }
