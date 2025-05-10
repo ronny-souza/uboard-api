@@ -7,3 +7,4 @@ Este software é propriedade intelectual de Ronyeri Marinho de Souza Almeida. El
 A disponibilização pública deste código no GitHub não constitui uma renúncia de direitos autorais, nem autoriza o uso sem acordo prévio.
 
 Qualquer uso indevido deste software poderá resultar em ações legais conforme a legislação de direitos autorais vigente (Lei 9.610/98 - Brasil).
+
