@@ -43,6 +43,9 @@ public class Issue extends BaseEntity {
     @JoinColumn(name = "milestone_id")
     private Milestone milestone;
 
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean isVoted;
+
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "issue_assignees",
@@ -65,6 +68,12 @@ public class Issue extends BaseEntity {
         this.setCreatedAt(issue.getCreatedAt());
         this.setUpdatedAt(issue.getUpdatedAt());
         this.setMilestone(milestone);
+        this.checkIsVoted();
+    }
+
+    public void checkIsVoted() {
+        this.isVoted = this.labels != null &&
+                this.labels.stream().anyMatch(label -> label.trim().matches("^\\d+$"));
     }
 
     public Long getProviderId() {

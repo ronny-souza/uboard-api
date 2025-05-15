@@ -40,10 +40,11 @@ class ScrumPokerRoomTest {
     void shouldReturnAnInstanceFromTheFormArgsConstructor() {
         CreateScrumPokerRoomForm formAsMock = mock(CreateScrumPokerRoomForm.class);
         User userAsMock = mock(User.class);
+        Milestone milestoneAsMock = mock(Milestone.class);
 
         when(formAsMock.name()).thenReturn("name");
 
-        ScrumPokerRoom scrumPokerRoom = new ScrumPokerRoom(formAsMock, userAsMock);
+        ScrumPokerRoom scrumPokerRoom = new ScrumPokerRoom(formAsMock, userAsMock, milestoneAsMock);
 
         assertNotNull(scrumPokerRoom);
         assertNotNull(scrumPokerRoom.getCreatedAt());

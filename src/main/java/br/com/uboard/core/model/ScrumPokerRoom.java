@@ -26,6 +26,10 @@ public class ScrumPokerRoom extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "milestone_id", nullable = false)
+    private Milestone milestone;
+
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean isVotesVisible;
 
@@ -33,12 +37,13 @@ public class ScrumPokerRoom extends BaseEntity {
         this.createdAt = LocalDateTime.now();
     }
 
-    public ScrumPokerRoom(CreateScrumPokerRoomForm form, User user) {
+    public ScrumPokerRoom(CreateScrumPokerRoomForm form, User user, Milestone milestone) {
         setUuid(UUID.randomUUID().toString());
         this.name = form.name();
         this.createdAt = LocalDateTime.now();
         this.closed = false;
         this.user = user;
+        this.milestone = milestone;
     }
 
     public String getName() {
@@ -75,6 +80,14 @@ public class ScrumPokerRoom extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Milestone getMilestone() {
+        return milestone;
+    }
+
+    public void setMilestone(Milestone milestone) {
+        this.milestone = milestone;
     }
 
     public boolean isVotesVisible() {
