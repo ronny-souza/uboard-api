@@ -35,6 +35,7 @@ public class SynchronizeMilestonesIssuesInDatabaseCommand implements TaskStageCo
     private final MilestoneRepository milestoneRepository;
     private final IssueRepository issueRepository;
     private final IssueUserRepository issueUserRepository;
+    private final ListGitMilestoneIssuesService listGitMilestoneIssuesService;
 
     public SynchronizeMilestonesIssuesInDatabaseCommand(CustomObjectMapper customObjectMapper,
                                                         OrganizationRepository organizationRepository,
@@ -49,8 +50,6 @@ public class SynchronizeMilestonesIssuesInDatabaseCommand implements TaskStageCo
         this.issueUserRepository = issueUserRepository;
         this.listGitMilestoneIssuesService = listGitMilestoneIssuesService;
     }
-
-    private final ListGitMilestoneIssuesService listGitMilestoneIssuesService;
 
     @Override
     @Transactional
@@ -88,6 +87,7 @@ public class SynchronizeMilestonesIssuesInDatabaseCommand implements TaskStageCo
                         IssueStateEnum.valueOf(issueForSynchronize.getState().toUpperCase()) :
                         null
                 );
+                issue.checkIsVoted();
                 this.configureIssueAssignees(issueForSynchronize, issue);
                 this.configureIssueAuthor(issueForSynchronize, issue);
             } else {
