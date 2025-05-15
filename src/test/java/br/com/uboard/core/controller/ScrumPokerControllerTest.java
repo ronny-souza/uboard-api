@@ -66,7 +66,7 @@ class ScrumPokerControllerTest {
     void shouldReturnStatus201AndTheScrumPokerRoomCreated() throws Exception {
         ScrumPokerRoomDTO scrumPokerRoomDTOAsMock = mock(ScrumPokerRoomDTO.class);
 
-        CreateScrumPokerRoomForm form = new CreateScrumPokerRoomForm("name");
+        CreateScrumPokerRoomForm form = new CreateScrumPokerRoomForm("name", "milestone");
 
         String formAsJson = this.objectMapper.writeValueAsString(form);
 
